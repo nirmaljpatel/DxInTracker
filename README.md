@@ -7,7 +7,12 @@ Chrome WebStore Link: https://chrome.google.com/webstore/detail/dx-shipment-trac
 
 This is mostly a learning exercise for me to learn how to write a Chrome Extension.
 
-To Be Built Features:
+Features:
+1) Allows to add ShipmentIds manually in the popup.
+2) Displays latest event for each shipment in the popup.
+3) Uses Chrome sync to sync added shipmentIds across computers.
+
+To Do:
 
 1) Better UI interface in the popup
 
