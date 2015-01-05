@@ -3,6 +3,8 @@ DxInTracker
 
 Chrome Extension for tracking DX.com shipments to India.
 
+Chrome WebStore Link: https://chrome.google.com/webstore/detail/dx-shipment-tracker-for-i/kcdlapnkooffcjoamidhdbbcepoibbdj
+
 This is mostly a learning exercise for me to learn how to write a Chrome Extension.
 
 To Be Built Features:
