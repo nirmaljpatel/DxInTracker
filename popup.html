@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+  <head>
+    <title>DX Shipment Tracker for India</title>
+    <style>
+		body {
+			min-width: 357px;
+			overflow-x: hidden;
+		}
+		form {
+			display: inline-flex;
+		}
+		.icon {
+			flex-basis: 20%;
+			width: 48px;
+			height: 48px;
+		}
+		form div {
+			padding-left: 0.5em;
+		}
+		h1.shipmentId {
+			font-size: 1em;
+		}
+		.statusRow {
+			display: table;
+			border-collapse: collapse;
+			font-size: smaller;
+		}
+		.statusRow .row {
+			display: table-row;
+		}
+		.statusRow span {
+			width: 49%;
+			display: table-cell;
+			vertical-align: middle;
+			border: thin solid;
+			padding: 0.25em;
+		}
+		.statusRow .hdr {
+		}
+		.statusRow .val {
+		}
+	  
+    </style>
+
+    <!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
+     -->
+    <script src="popup.js"></script>
+  </head>
+  <body>
+	<form id="formAddShipmentId" autocomplete="on">
+		<img class="icon" src="icon_128x128.png">
+		<div>
+			<span> DX Shipment Tracker for India.</span>
+			<input type="text" id="inputShipmentId" placeholder="Shipment Id" />
+			<input type="button" value="Add" id="btnAddShipmentId" />
+			<input type="button" value="Remove All" id="btnRemoveAllShipmentIds" />
+		</div>
+	</form>
+	
+	<div id="shipmentStatusDiv">
+	</div>
+  </body>
+</html>
+
