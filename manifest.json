@@ -5,7 +5,7 @@
 	"version": "1.0",
 	
 	"browser_action": {
-		"default_icon": "icon.png",
+		"default_icon": "icon_16x16.png",
 		"default_popup": "popup.html"
 	},
 	
@@ -15,7 +15,7 @@
 	],
 	
 	"icons": {
-			"16": "icon.png",
+			"16": "icon_16x16.png",
 			"48": "icon_48x48.png",
 			"128": "icon_128x128.png"
 	},
