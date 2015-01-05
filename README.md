@@ -29,3 +29,5 @@ To Do:
   1.4) Ability to delete individual ShipmentIds.
 
 2) Allow adding ShipmentIds from DX.com order details page.
+
+3) OmniBox integration to search for shipments.
