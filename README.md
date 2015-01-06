@@ -5,7 +5,7 @@ Chrome Extension for tracking DX.com shipments to India.
 
 [Extension in Chrome WebStore](https://chrome.google.com/webstore/detail/dx-shipment-tracker-for-i/kcdlapnkooffcjoamidhdbbcepoibbdj)
 
-This is mostly a learning exercise for me to learn how to write a Chrome Extension.
+This is mostly a learning exercise for myself to understand the Chrome Extension development ecosystem and its capabilities.
 
 ##Features:
 1. [x] [**Browser Action**](https://developer.chrome.com/extensions/browserAction) Popup
@@ -20,4 +20,7 @@ This is mostly a learning exercise for me to learn how to write a Chrome Extensi
   2. [ ] Loading animation when refreshing status.
   3. [ ] Cache last query results.
   4. [ ] Ability to delete individual ShipmentIds.
+6. [ ] [**Analytics**](https://developer.chrome.com/apps/analytics)
+  1. [x] Integrated with Google analytics .
+  2. [ ] Identify and track more events based on usage pattern.
 
