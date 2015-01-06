@@ -12,10 +12,11 @@ This is mostly a learning exercise for me to learn how to write a Chrome Extensi
   1. [x] Allows to add ShipmentIds manually in the popup.
   2. [x] Displays latest event for each shipment in the popup.
 2. [x] Uses [**Chrome Storage and Sync**](https://developer.chrome.com/extensions/storage) to synchronize added shipmentIds across computers.
-3. [ ] **Better UI** interface for the Browser Action popup
+3. [ ] Allow adding ShipmentIds from DX.com order details page using [**Content Scripts**](https://developer.chrome.com/extensions/content_scripts).
+4. [ ] **[OmniBox](https://developer.chrome.com/extensions/omnibox) integration** to search for shipments.
+5. [ ] **UX** - Improve the Interface and Usability
   1. [ ] Pre-built table based on ShipmentIds being tracked
   2. [ ] Loading animation when refreshing status.
   3. [ ] Cache last query results
   4. [ ] Ability to delete individual ShipmentIds.
-4. [ ] Allow adding ShipmentIds from DX.com order details page using [**Content Scripts**](https://developer.chrome.com/extensions/content_scripts).
-5. [ ] **[OmniBox](https://developer.chrome.com/extensions/omnibox) integration** to search for shipments.
+
