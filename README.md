@@ -3,7 +3,7 @@ DxInTracker
 
 Chrome Extension for tracking DX.com shipments to India.
 
-<a href="https://chrome.google.com/webstore/detail/dx-shipment-tracker-for-i/kcdlapnkooffcjoamidhdbbcepoibbdj">
+<a href="https://chrome.google.com/webstore/detail/dx-shipment-tracker-for-i/kcdlapnkooffcjoamidhdbbcepoibbdj" target="_blank">
 <img src="https://raw.githubusercontent.com/nirmaljpatel/DxInTracker/master/other_assets/Install%20Button.png" alt="Install button for DX Shipment Tracker for India">
 </a>
 
