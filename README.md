@@ -20,7 +20,8 @@ This is mostly a learning exercise for myself to understand the Chrome Extension
   2. [ ] Loading animation when refreshing status.
   3. [ ] Cache last query results.
   4. [ ] Ability to delete individual ShipmentIds.
+  5. [ ] Hyperlinks to IPS search site.
 6. [ ] [**Analytics**](https://developer.chrome.com/apps/analytics)
   1. [x] Integrated with Google analytics .
-  2. [ ] Identify and track more events based on usage pattern.
+  2. [ ] Identify and track more events based on usage patterns.
 
