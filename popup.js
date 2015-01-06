@@ -17,6 +17,7 @@ var ipsTracker = {
 	var shipmentId = input.value;
 	console.log("Adding id:", shipmentId);
 	
+	//TODO:Code - Move all sync related code into a separate module.
 	chrome.storage.sync.get([ipsTracker.chromeStorageKey], function(result) {
 		console.log(result);
 		result.DXTrkrIn_ShipmentIds = result.DXTrkrIn_ShipmentIds?result.DXTrkrIn_ShipmentIds:[];

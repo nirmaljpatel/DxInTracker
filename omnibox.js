@@ -6,6 +6,7 @@ var suggestion = {
  };
 chrome.omnibox.setDefaultSuggestion(suggestion);
 
+//TODO:Code - Should not repeat these everywhere. Move them to a shared module.
 var chromeStorageKey = "DXTrkrIn_ShipmentIds";
 var searchOnIpsWeb = 'http://ipsweb.ptcmysore.gov.in/ipswebtracking/IPSWeb_item_events.asp?' +
 	  'Submit=Submit' + '&' +
@@ -16,6 +17,7 @@ var findInArray = function(key, array) {
 	var results = [];
 	for (var i = 0; i < array.length; i++) {
 		if (array[i].indexOf(key) == 0) {
+			//TODO:Code - Keep this function to find matching elements only and do the custom array creation independently.
 			results.push({content: array[i] + "", description: array[i] +" - Match from your saved ShipmentIds in DxInTracker."});
 		}
 	}
@@ -45,7 +47,7 @@ chrome.omnibox.onInputChanged.addListener(
 chrome.omnibox.onInputEntered.addListener(
   function(text) {
     console.log('inputEntered: ' + text);
-	//TODO - Offer to save this ShipmentId if not already in saved list
+	//TODO:Feature - Offer to save this ShipmentId if not already in saved list
 	
 	chrome.tabs.create({
 		selected: true,
