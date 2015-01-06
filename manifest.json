@@ -9,10 +9,15 @@
 		"default_popup": "popup.html"
 	},
 	
+	"background": {
+		"scripts": ["omnibox.js"]},
+	
 	"permissions": [
-	"http://ipsweb.ptcmysore.gov.in/",
-	"storage"
+		"http://ipsweb.ptcmysore.gov.in/",
+		"storage"
 	],
+	
+	"omnibox": { "keyword" : "dxin" },
 	
 	"icons": {
 			"16": "images/icon_16x16.png",
