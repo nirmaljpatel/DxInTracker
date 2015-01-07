@@ -27,6 +27,7 @@ This is mostly a learning exercise for myself to understand the Chrome Extension
   4. [ ] Proactive notification to users by detecting changes in shipment info.
   5. [ ] Ability to delete individual ShipmentIds.
   6. [ ] Hyperlinks to IPS search site.
+  7. [ ] Allow user to enter a custom description label for each shipmentId.
 6. [ ] [**Analytics**](https://developer.chrome.com/apps/analytics)
   1. [x] Integrated with Google analytics .
   2. [ ] Identify and track more events based on usage patterns.
