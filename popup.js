@@ -114,7 +114,7 @@ var ipsTracker = {
 	if(shipmentStatus.isValid){
 		var hdrRowNode = document.createElement('h1');
 				hdrRowNode.className = "shipmentId";
-				hdrRowNode.innerHTML = shipmentStatus.shipmentId +
+				hdrRowNode.innerHTML = "<a href='"+e.target.responseURL+"' target='_blank'>"+shipmentStatus.shipmentId + "</a>" + 
 				" - [" + shipmentStatus.shipmentLabel + "]";
 		
 		var latestStatusNode = document.createElement('div');
