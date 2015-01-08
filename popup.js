@@ -1,6 +1,6 @@
 
 var ipsTracker = {
-	chromeStorageKey: 'DXTrkrIn_ShipmentIds',
+	chromeStorageKey: 'DXTrkrIn_Shipments',
   /**
    * 
    * @type {string}
@@ -12,28 +12,33 @@ var ipsTracker = {
 
   addAShipmentId: function(event) {
 	var form = document.getElementById('formAddShipmentId');
-	var input = document.getElementById('inputShipmentId');
+	var shipmentId = document.getElementById('inputShipmentId').value;
+	var label = document.getElementById('userLabel').value;
 	
-	var shipmentId = input.value;
-	console.log("Adding id:", shipmentId);
+	var shipment = {
+		'shipmentId': shipmentId,
+		'label': label
+	};
+	
+	console.log("Adding:", shipment);
 	
 	//TODO:Code - Move all sync related code into a separate module.
 	chrome.storage.sync.get([ipsTracker.chromeStorageKey], function(result) {
 		console.log(result);
-		result.DXTrkrIn_ShipmentIds = result.DXTrkrIn_ShipmentIds?result.DXTrkrIn_ShipmentIds:[];
+		result.DXTrkrIn_Shipments = result.DXTrkrIn_Shipments?result.DXTrkrIn_Shipments:[];
 		
-		if(result.DXTrkrIn_ShipmentIds.indexOf(shipmentId) == 1) {
-			console.log("ShipmentId already in list:", shipmentId);
-		} else {
-			result.DXTrkrIn_ShipmentIds.unshift(shipmentId);
-		}
+		//if(result.DXTrkrIn_Shipments.indexOf(shipmentId) == 1) {
+		//	console.log("ShipmentId already in list:", shipmentId);
+		//} else {
+			result.DXTrkrIn_Shipments.unshift(shipment);
+		//}
 		
-		console.log(result.DXTrkrIn_ShipmentIds);
+		console.log(result.DXTrkrIn_Shipments);
 		
 		chrome.storage.sync.remove([ipsTracker.chromeStorageKey], function(){
 			console.log("Chrome Storage cleared...");
 			var jsonObj = {};
-			jsonObj[ipsTracker.chromeStorageKey] = result.DXTrkrIn_ShipmentIds;
+			jsonObj[ipsTracker.chromeStorageKey] = result.DXTrkrIn_Shipments;
 			chrome.storage.sync.set(jsonObj, function() {
 				console.log("Saved a new ShipmentId");
 			});
@@ -51,16 +56,17 @@ var ipsTracker = {
    *
    * @public
    */
-  requestLatestStatus: function(shipmentIds) {
-	shipmentIds.forEach(this.requestLatestStatusForAShipmentId_, this);
+  requestLatestStatus: function(shipments) {
+	shipments.forEach(this.requestLatestStatusForAShipmentId_, this);
   },
   /**
    * Function to initiate an Ajax call to fetch IPS Tracker Status page
    * @private
    */
-  requestLatestStatusForAShipmentId_: function(shipmentId, index) {
+  requestLatestStatusForAShipmentId_: function(shipment, index) {
     var req = new XMLHttpRequest();
-	var ipsUrl = this.searchOnIpsWeb_ +  encodeURIComponent(shipmentId); 
+	var ipsUrl = this.searchOnIpsWeb_ +  encodeURIComponent(shipment.shipmentId); 
+	this.shipment = shipment;
 	console.log(ipsUrl);
 	
     req.open("GET", ipsUrl, true);
@@ -100,14 +106,16 @@ var ipsTracker = {
 		return(false);
 	};
 	
-	//Overwrite shipmentId to handle scenarios where we werent able to parse out a shipmentId from page HTML.
-	shipmentStatus.shipmentId = getQueryVariable(e.target.responseURL, 'itemid')
+	//Overwrite shipmentId to handle scenarios where we were not able to parse out a shipmentId from page HTML.
+	shipmentStatus.shipmentId = this.shipment.shipmentId;//getQueryVariable(e.target.responseURL, 'itemid')
+	shipmentStatus.shipmentLabel = this.shipment.label;
 	
 	//Verify if this is a valid response from IPSTracker
 	if(shipmentStatus.isValid){
 		var hdrRowNode = document.createElement('h1');
 				hdrRowNode.className = "shipmentId";
-				hdrRowNode.innerHTML = shipmentStatus.shipmentId;
+				hdrRowNode.innerHTML = shipmentStatus.shipmentId +
+				" - [" + shipmentStatus.shipmentLabel + "]";
 		
 		var latestStatusNode = document.createElement('div');
 				latestStatusNode.className = "statusRow";
@@ -210,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	document.getElementById('btnRemoveAllShipmentIds').addEventListener('click', ipsTracker.removeAllShipmentIds);
 	
 	//Hardcoding a test shipmentId
-	//chrome.storage.sync.set({'DXTrkrIn_ShipmentIds': ["RP300236557SG"] }, function() {
+	//chrome.storage.sync.set({'DXTrkrIn_Shipments': ["RP300236557SG"] }, function() {
 	//	console.log("Saved a new ShipmentId");
 	//});
 	
@@ -228,8 +236,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 		//Refresh the page with new shipmentIds or clear if none
 		chrome.storage.sync.get([ipsTracker.chromeStorageKey], function(result) {
-			if(result.DXTrkrIn_ShipmentIds) {
-				ipsTracker.requestLatestStatus(result.DXTrkrIn_ShipmentIds)
+			if(result.DXTrkrIn_Shipments) {
+				ipsTracker.requestLatestStatus(result.DXTrkrIn_Shipments)
 			} else {
 				document.getElementById('shipmentStatusDiv').innerHTML = "";
 			}
@@ -239,8 +247,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	//Fetch from underlying storage and update page if shipmentIds present
 	chrome.storage.sync.get([ipsTracker.chromeStorageKey], function(result) {
 		console.log(result);
-		if(result.DXTrkrIn_ShipmentIds) {
-			ipsTracker.requestLatestStatus(result.DXTrkrIn_ShipmentIds)
+		if(result.DXTrkrIn_Shipments) {
+			ipsTracker.requestLatestStatus(result.DXTrkrIn_Shipments)
 		}
 	});
 	

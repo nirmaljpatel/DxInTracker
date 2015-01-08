@@ -21,13 +21,13 @@ This is mostly a learning exercise for myself to understand the Chrome Extension
   2. [x] Suggests matches from saved shipmentIds as you type.
   3. [x] Accepting a suggestion or pressing enter opens a new tab with result page from IPS portal.
 5. [ ] **UX** - Improve the Interface and Usability
-  1. [ ] Pre-built table based on ShipmentIds being tracked.
+  1. [ ] Pre-build table based on ShipmentIds being tracked before initiating shipment status requests.
   2. [ ] Loading animation when refreshing status.
   3. [ ] Cache last query results.
   4. [ ] Proactive notification to users by detecting changes in shipment info.
   5. [ ] Ability to delete individual ShipmentIds.
   6. [ ] Hyperlinks to IPS search site.
-  7. [ ] Allow user to enter a custom description label for each shipmentId.
+  7. [x] Allow user to enter a custom description label for each shipmentId.
 6. [ ] [**Analytics**](https://developer.chrome.com/apps/analytics)
   1. [x] Integrated with Google analytics .
   2. [ ] Identify and track more events based on usage patterns.
