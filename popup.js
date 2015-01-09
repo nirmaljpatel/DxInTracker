@@ -66,11 +66,11 @@ var ipsTracker = {
   requestLatestStatusForAShipmentId_: function(shipment, index) {
     var req = new XMLHttpRequest();
 	var ipsUrl = this.searchOnIpsWeb_ +  encodeURIComponent(shipment.shipmentId); 
-	this.shipment = shipment;
+
 	console.log(ipsUrl);
 	
     req.open("GET", ipsUrl, true);
-    req.onload = this.showStatus_.bind(this);
+    req.onload = this.showStatus_.bind(this, shipment);
     req.send(null);
   },
 
@@ -82,7 +82,7 @@ var ipsTracker = {
    * @param {ProgressEvent} e The XHR ProgressEvent.
    * @private
    */
-  showStatus_: function (e) {
+  showStatus_: function (shipment, e) {
 
 	var shipmentStatus = this.parseIpsPage_(e.target.responseText);
 	
@@ -107,8 +107,8 @@ var ipsTracker = {
 	};
 	
 	//Overwrite shipmentId to handle scenarios where we were not able to parse out a shipmentId from page HTML.
-	shipmentStatus.shipmentId = this.shipment.shipmentId;//getQueryVariable(e.target.responseURL, 'itemid')
-	shipmentStatus.shipmentLabel = this.shipment.label;
+	shipmentStatus.shipmentId = shipment.shipmentId;//getQueryVariable(e.target.responseURL, 'itemid')
+	shipmentStatus.shipmentLabel = shipment.label;
 	
 	//Verify if this is a valid response from IPSTracker
 	if(shipmentStatus.isValid){
