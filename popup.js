@@ -22,33 +22,19 @@ var ipsTracker = {
 	
 	console.log("Adding:", shipment);
 	
-	//TODO:Code - Move all sync related code into a separate module.
-	chrome.storage.sync.get([ipsTracker.chromeStorageKey], function(result) {
-		console.log(result);
-		result.DXTrkrIn_Shipments = result.DXTrkrIn_Shipments?result.DXTrkrIn_Shipments:[];
-		
-		//if(result.DXTrkrIn_Shipments.indexOf(shipmentId) == 1) {
-		//	console.log("ShipmentId already in list:", shipmentId);
-		//} else {
-			result.DXTrkrIn_Shipments.unshift(shipment);
-		//}
-		
-		console.log(result.DXTrkrIn_Shipments);
-		
-		chrome.storage.sync.remove([ipsTracker.chromeStorageKey], function(){
-			console.log("Chrome Storage cleared...");
-			var jsonObj = {};
-			jsonObj[ipsTracker.chromeStorageKey] = result.DXTrkrIn_Shipments;
-			chrome.storage.sync.set(jsonObj, function() {
-				console.log("Saved a new ShipmentId");
-			});
-		});
+	var message = {extensionKey: "dxin"};
+	message["operation"] = "add";
+	message["shipmentToAdd"] = shipment;
+	chrome.runtime.sendMessage(message, function(response) {
+		  console.log(response.status);
 	});
   },
   removeAllShipmentIds: function(event) {
-	chrome.storage.sync.remove([ipsTracker.chromeStorageKey], function(){
-		console.log("Chrome Storage cleared...");
-	});
+	  var message = {extensionKey: "dxin"};
+	  message["operation"] = "deleteAll";
+	  chrome.runtime.sendMessage(message, function(response) {
+		  console.log(response.status);
+	  });
   },
   /**
    * Sends an XHR GET request to grab photos of lots and lots of kittens. The
