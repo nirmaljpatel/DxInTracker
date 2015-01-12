@@ -1,41 +1,49 @@
 
 var ipsTracker = {
-	chromeStorageKey: 'DXTrkrIn_Shipments',
   /**
    * 
    * @type {string}
    * @private
    */
-  searchOnIpsWeb_: 'http://ipsweb.ptcmysore.gov.in/ipswebtracking/IPSWeb_item_events.asp?' +
-	  'Submit=Submit' + '&' +
-	  'itemid=',
+	searchOnIpsWeb_: 'http://ipsweb.ptcmysore.gov.in/ipswebtracking/IPSWeb_item_events.asp?' +
+		'Submit=Submit' + '&' +
+		'itemid=',
 
-  addAShipmentId: function(event) {
-	var form = document.getElementById('formAddShipmentId');
-	var shipmentId = document.getElementById('inputShipmentId').value;
-	var label = document.getElementById('userLabel').value;
-	
-	var shipment = {
-		'shipmentId': shipmentId,
-		'label': label
-	};
-	
-	console.log("Adding:", shipment);
-	
-	var message = {extensionKey: "dxin"};
-	message["operation"] = "add";
-	message["shipmentToAdd"] = shipment;
-	chrome.runtime.sendMessage(message, function(response) {
-		  console.log(response.status);
-	});
-  },
-  removeAllShipmentIds: function(event) {
-	  var message = {extensionKey: "dxin"};
-	  message["operation"] = "deleteAll";
-	  chrome.runtime.sendMessage(message, function(response) {
-		  console.log(response.status);
-	  });
-  },
+	addAShipmentId: function(event) {
+		var form = document.getElementById('formAddShipmentId');
+		var shipmentId = document.getElementById('inputShipmentId').value.trim();
+		var label = document.getElementById('userLabel').value.trim();
+		
+		var shipment = {
+			'shipmentId': shipmentId,
+			'label': label
+		};
+		
+		console.log("Adding:", shipment);
+		
+		var message = {extensionKey: "dxin"};
+		message["operation"] = "add";
+		message["shipmentToAdd"] = shipment;
+		chrome.runtime.sendMessage(message, function(response) {
+			  console.log(response.status);
+		});
+	},
+	removeAllShipmentIds: function(event) {
+		var message = {extensionKey: "dxin"};
+		message["operation"] = "deleteAll";
+		chrome.runtime.sendMessage(message, function(response) {
+			console.log(response.status);
+		});
+	},
+	refreshPopUp: function(){
+		//Fetch from underlying storage and update page if shipmentIds present
+		var message = {extensionKey: "dxin"};
+		message["operation"] = "getAll";
+		chrome.runtime.sendMessage(message, function(shipments){
+			console.log("Got shipments:", shipments);
+			ipsTracker.requestLatestStatus(shipments);
+		});
+	},
   /**
    * Sends an XHR GET request to grab photos of lots and lots of kittens. The
    * XHR's 'onload' event is hooks up to the 'showPhotos_' method.
@@ -43,7 +51,10 @@ var ipsTracker = {
    * @public
    */
   requestLatestStatus: function(shipments) {
-	shipments.forEach(this.requestLatestStatusForAShipmentId_, this);
+	document.getElementById('shipmentStatusDiv').innerHTML = "";
+	if(shipments){
+		shipments.forEach(this.requestLatestStatusForAShipmentId_, this);
+	}
   },
   /**
    * Function to initiate an Ajax call to fetch IPS Tracker Status page
@@ -94,7 +105,7 @@ var ipsTracker = {
 	
 	//Overwrite shipmentId to handle scenarios where we were not able to parse out a shipmentId from page HTML.
 	shipmentStatus.shipmentId = shipment.shipmentId;//getQueryVariable(e.target.responseURL, 'itemid')
-	shipmentStatus.shipmentLabel = shipment.label;
+	shipmentStatus.shipmentLabel = shipment.label?shipment.label:shipment.shippedOnDate;
 	
 	//Verify if this is a valid response from IPSTracker
 	if(shipmentStatus.isValid){
@@ -200,54 +211,35 @@ var ipsTracker = {
 //Fetch all shipment status as soon as the document's DOM is ready.
 document.addEventListener('DOMContentLoaded', function () {
 	
-	//Setup the popup with text values from manifest.json
+	//Setup the popup with text values from 
 	document.title = manifest.name;
-	document.getElementById('labelExtName').innerText = manifest.name + " [v"+manifest.version+"]";
+	document.getElementById('labelExtName').innerText = manifest.name + "["+manifest.version+"]";
 	
 	//Bind the button event handlers
 	document.getElementById('btnAddShipmentId').addEventListener('click', ipsTracker.addAShipmentId);
 	document.getElementById('btnRemoveAllShipmentIds').addEventListener('click', ipsTracker.removeAllShipmentIds);
 	
-	//Hardcoding a test shipmentId
-	//chrome.storage.sync.set({'DXTrkrIn_Shipments': ["RP300236557SG"] }, function() {
-	//	console.log("Saved a new ShipmentId");
-	//});
+	ipsTracker.refreshPopUp();
 	
-	//Invoked when underlying storage modified - shipmentId added or all removed.
-	//Problemo: This gets invoked twice when we clear and update for adding a shipmentId causing the UI to go blank and refresh
-	chrome.storage.onChanged.addListener(function(changes, namespace) {
-        for (key in changes) {
-          var storageChange = changes[key];
-          console.log('Storage key "%s" in namespace "%s" changed. ' +
-                      'Old value was "%s", new value is "%s".',
-                      key,
-                      namespace,
-                      storageChange.oldValue,
-                      storageChange.newValue);
-        }
-		//Refresh the page with new shipmentIds or clear if none
-		chrome.storage.sync.get([ipsTracker.chromeStorageKey], function(result) {
-			if(result.DXTrkrIn_Shipments) {
-				ipsTracker.requestLatestStatus(result.DXTrkrIn_Shipments)
-			} else {
-				document.getElementById('shipmentStatusDiv').innerHTML = "";
-			}
-		});
-    });
-	
-	//Fetch from underlying storage and update page if shipmentIds present
-	chrome.storage.sync.get([ipsTracker.chromeStorageKey], function(result) {
-		console.log(result);
-		if(result.DXTrkrIn_Shipments) {
-			ipsTracker.requestLatestStatus(result.DXTrkrIn_Shipments)
-		}
-	});
-	
+	//Setup Google Analytics
 	ga('create', 'UA-58206751-1', 'auto');
 	ga('send', 'pageview');
 });
+//Invoked when underlying storage modified - shipmentId added or all removed.
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+	for (key in changes) {
+	  var storageChange = changes[key];
+	  console.log('Storage key "%s" in namespace "%s" changed. ' +
+				  'Old value was "%s", new value is "%s".',
+				  key,
+				  namespace,
+				  storageChange.oldValue,
+				  storageChange.newValue);
+	}
+	ipsTracker.refreshPopUp();
+});
 
-//Setup Google Analytics
+//Google Analytics Script modified for Chrome Extensions
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
