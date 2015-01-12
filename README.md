@@ -15,7 +15,7 @@ This is mostly a learning exercise for myself to understand the Chrome Extension
   2. [x] Fetch shipment data HTML page from IPS Tracking server using [**XHR**](https://developer.chrome.com/extensions/xhr) and parse into JSON.
   3. [x] Displays latest event for each shipment in the popup.
 2. [x] Uses [**Chrome Storage and Sync**](https://developer.chrome.com/extensions/storage) to synchronize added shipmentIds across computers.
-3. [ ] Allow adding ShipmentIds from DX.com order details page using [**Content Scripts**](https://developer.chrome.com/extensions/content_scripts)
+3. [x] Allow adding ShipmentIds from DX.com order details page using [**Content Scripts**](https://developer.chrome.com/extensions/content_scripts)
 4. [x] **[OmniBox](https://developer.chrome.com/extensions/omnibox) integration** to search for shipments
   1. [x] Enter the keyword "**dxin**" to activate DxInTracker then search for ShipmentIds on IPS portal.
   2. [x] Suggests matches from saved shipmentIds as you type.
