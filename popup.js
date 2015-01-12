@@ -199,6 +199,11 @@ var ipsTracker = {
 
 //Fetch all shipment status as soon as the document's DOM is ready.
 document.addEventListener('DOMContentLoaded', function () {
+	
+	//Setup the popup with text values from manifest.json
+	document.title = manifest.name;
+	document.getElementById('labelExtName').innerText = manifest.name + " [v"+manifest.version+"]";
+	
 	//Bind the button event handlers
 	document.getElementById('btnAddShipmentId').addEventListener('click', ipsTracker.addAShipmentId);
 	document.getElementById('btnRemoveAllShipmentIds').addEventListener('click', ipsTracker.removeAllShipmentIds);
@@ -247,3 +252,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 	})(window,document,'script','https://ssl.google-analytics.com/ga.js','ga');
+	
+//Fetching values from manifest.json
+var manifest = chrome.runtime.getManifest();
