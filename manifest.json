@@ -23,6 +23,8 @@
 	
 	"omnibox": { "keyword" : "dxin" },
 	
+	"options_page": "options/options.html",
+	
 	"content_scripts": [
 	{
 		"matches": ["https://my.dx.com/MyOrders/OrderDetail/*"],
