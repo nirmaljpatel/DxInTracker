@@ -81,18 +81,15 @@ var ipsTracker = {
    */
   showStatus_: function (shipment, e) {
 
-	var shipmentStatus = this.parseIpsPage_(e.target.responseText);
-	
-	console.log(shipmentStatus);
+	var shipStatFrmIps = this.parseIpsPage_(e.target.responseText);
+	console.log(shipStatFrmIps);
 
 	var respDiv = document.createElement('div');
 	
 	var aDiv = document.createElement('div');
 	aDiv.innerHTML = e.target.responseText;
 	
-
-	var getQueryVariable = function (queryString, variable)
-	{
+	var getQueryVariable = function (queryString, variable){
 		var vars = queryString.split("&");
 		for (var i=0;i<vars.length;i++) {
 			var pair = vars[i].split("=");
@@ -104,23 +101,23 @@ var ipsTracker = {
 	};
 	
 	//Overwrite shipmentId to handle scenarios where we were not able to parse out a shipmentId from page HTML.
-	shipmentStatus.shipmentId = shipment.shipmentId;//getQueryVariable(e.target.responseURL, 'itemid')
-	shipmentStatus.shipmentLabel = shipment.label?shipment.label:shipment.shippedOnDate;
+	shipStatFrmIps.shipmentId = shipment.shipmentId;//getQueryVariable(e.target.responseURL, 'itemid')
+	shipStatFrmIps.shipmentLabel = shipment.label?shipment.label:shipment.shippedOnDate;
 	
 	//Verify if this is a valid response from IPSTracker
-	if(shipmentStatus.isValid){
+	if(shipStatFrmIps.isValid){
 		var hdrRowNode = document.createElement('h1');
 				hdrRowNode.className = "shipmentId";
-				hdrRowNode.innerHTML = "<a href='"+e.target.responseURL+"' target='_blank'>"+shipmentStatus.shipmentId + "</a>" + 
-				" - [" + shipmentStatus.shipmentLabel + "]";
+				hdrRowNode.innerHTML = "<a href='"+e.target.responseURL+"' target='_blank'>"+shipStatFrmIps.shipmentId + "</a>" + 
+				" - [" + shipStatFrmIps.shipmentLabel + "]";
 		
 		var latestStatusNode = document.createElement('div');
 				latestStatusNode.className = "statusRow";
 
-		if(shipmentStatus.hasShipped) {
+		if(shipStatFrmIps.hasShipped) {
 			//Valid Shipment Status table
-			var hdrs = shipmentStatus.headers;
-			var shipmentEvents = shipmentStatus.statusChangeEvents;
+			var hdrs = shipStatFrmIps.headers;
+			var shipmentEvents = shipStatFrmIps.statusChangeEvents;
 			var latestStatus = shipmentEvents[shipmentEvents.length-1];
 
 			var lastStatusHtml = "";
@@ -135,7 +132,7 @@ var ipsTracker = {
 			latestStatusNode.innerHTML = lastStatusHtml;
 		} else {
 			//ShipmentId not found on IPS yet!!!
-			latestStatusNode.innerHTML = shipmentStatus.extraMsg;
+			latestStatusNode.innerHTML = shipStatFrmIps.extraMsg;
 		}
 		respDiv.appendChild(hdrRowNode);
 		respDiv.appendChild(latestStatusNode);
@@ -225,6 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	ga('create', 'UA-58206751-1', 'auto');
 	ga('send', 'pageview');
 });
+
 //Invoked when underlying storage modified - shipmentId added or all removed.
 chrome.storage.onChanged.addListener(function(changes, namespace) {
 	for (key in changes) {
