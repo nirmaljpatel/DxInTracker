@@ -31,7 +31,7 @@ This is mostly a learning exercise for myself to understand the Chrome Extension
 6. [ ] [**Analytics**](https://developer.chrome.com/apps/analytics)
   1. [x] Integrated with Google analytics .
   2. [ ] Identify and track more events based on usage patterns.
-7. [ ] An [**Options**](https://developer.chrome.com/extensions/options) page
+7. [x] An [**Options**](https://developer.chrome.com/extensions/options) page
   1. [ ] Option to turn-off using Chrome Sync
   2. [ ] Option to turn-off Add to from Shipment page
 
