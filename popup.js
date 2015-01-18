@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 	//Setup the popup with text values from 
 	document.title = manifest.name;
-	document.getElementById('labelExtName').innerText = manifest.name + "["+manifest.version+"]";
+	document.getElementById('labelExtName').innerText = manifest.name + " [v"+manifest.version+"]";
 	
 	//Bind the button event handlers
 	document.getElementById('btnAddShipmentId').addEventListener('click', ipsTracker.addAShipmentId);
