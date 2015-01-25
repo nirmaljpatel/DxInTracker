@@ -1,0 +1,31 @@
+{
+  "name": "DxInTracker",
+  "version": "1.5.0",
+  "description": "A Chrome extension to help track Dx.com shipments to India",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rimraf DxInTracker.zip" 
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nirmaljpatel/DxInTracker.git"
+  },
+  "keywords": [
+    "dx.com",
+    "dx",
+    "shipment",
+    "tracker",
+    "india"
+  ],
+  "author": "Nirmal Patel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nirmaljpatel/DxInTracker/issues"
+  },
+  "homepage": "https://github.com/nirmaljpatel/DxInTracker",
+  "devDependencies": {
+    "jshint": "^2.6.0",
+    "rimraf": "^2.2.8"
+  }
+}
