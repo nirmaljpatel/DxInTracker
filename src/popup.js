@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //Invoked when underlying storage modified - shipmentId added or all removed.
 chrome.storage.onChanged.addListener(function(changes, namespace) {
-	for (key in changes) {
+	for (var key in changes) {
 	  var storageChange = changes[key];
 	  console.log('Storage key "%s" in namespace "%s" changed. ' +
 				  'Old value was "%s", new value is "%s".',
@@ -239,8 +239,8 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 
 //Google Analytics Script modified for Chrome Extensions
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		(i[r].q=i[r].q||[]).push(arguments);},i[r].l=1*new Date();a=s.createElement(o);
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m);
 	})(window,document,'script','https://ssl.google-analytics.com/ga.js','ga');
 	
 //Fetching values from manifest.json
