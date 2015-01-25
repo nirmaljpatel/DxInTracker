@@ -4,11 +4,15 @@
   "description": "A Chrome extension to help track Dx.com shipments to India",
   "main": "index.js",
   "scripts": {
+    "env": "env",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf DxInTracker.zip",
     "lint": "jshint src",
+    "prebuild": "npm run clean",
     "build": "node ZipBuilder.js",
-    "prebuild": "npm run clean"
+    "version": "node versionBumper.js",
+    "release": "npm run version", 
+    "postrelease": "npm run build"
   },
   "repository": {
     "type": "git",
