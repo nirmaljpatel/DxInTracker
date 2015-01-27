@@ -9,8 +9,8 @@
     "clean": "rimraf DxInTracker.zip",
     "lint": "jshint src",
     "prebuild": "npm run clean",
-    "build": "node ZipBuilder.js",
-    "version": "node versionBumper.js",
+    "build": "node tools/ZipBuilder.js",
+    "version": "node tools/versionBumper.js",
     "release": "npm run version", 
     "postrelease": "npm run build"
   },
